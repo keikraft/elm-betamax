@@ -1,7 +1,8 @@
 module Main exposing (main)
 
-import Html exposing (..)
+import Html.Styled exposing (..)
 import Views.Header
+import Views.SearchBar
 
 
 main : Program Never Model Msg
@@ -58,4 +59,5 @@ subscriptions model =
 view model =
     div []
         [ Views.Header.view
+        , Views.SearchBar.view
         ]
