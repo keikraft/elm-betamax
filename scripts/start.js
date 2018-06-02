@@ -4,7 +4,7 @@ const WebpackDevServer = require('webpack-dev-server');
 const paths = require('../config/paths');
 const webpackConfig = require('../config/webpack.config.dev');
 
-const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 8080;
 const HOST = process.env.HOST || '0.0.0.0';
 
 const compiler = webpack(webpackConfig);
