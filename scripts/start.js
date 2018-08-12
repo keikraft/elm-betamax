@@ -9,6 +9,7 @@ const HOST = process.env.HOST || '0.0.0.0';
 
 const compiler = webpack(webpackConfig);
 const devServer = new WebpackDevServer(compiler, {
+  historyApiFallback: true,
   stats: {
     cached: false,
     children: false,

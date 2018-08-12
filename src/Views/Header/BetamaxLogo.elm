@@ -1,4 +1,4 @@
-module Views.BetamaxLogo exposing (view)
+module Views.Header.BetamaxLogo exposing (view)
 
 import Html.Styled exposing (Html)
 import Svg.Styled exposing (..)
