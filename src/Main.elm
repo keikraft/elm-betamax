@@ -1,31 +1,53 @@
 module Main exposing (main)
 
 import Html.Styled exposing (..)
-import Views.Header
+import Navigation exposing (Location)
+import Pages.Cast
+import Pages.Discover
+import Pages.Home
+import Pages.NotFound
+import Routing exposing (Route, parseLocation)
+import Views.Header.Header
 import Views.SearchBar
 
 
 main : Program Never Model Msg
 main =
-    program
+    Navigation.program OnLocationChange
         { init = init
         , update = update
         , subscriptions = subscriptions
-        , view = view
+        , view = view >> toUnstyled
         }
 
 
+type Page
+    = NotFound
+    | Home Pages.Home.Model
+    | Discover Pages.Discover.Model
+    | Cast Pages.Cast.Model
 
--- INIT
+
+
+-- MODEL
 
 
 type alias Model =
-    String
+    { route : Route }
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( "Hello", Cmd.none )
+initialModel : Route -> Model
+initialModel route =
+    { route = route }
+
+
+init : Location -> ( Model, Cmd Msg )
+init location =
+    let
+        currentRoute =
+            Routing.parseLocation location
+    in
+    ( initialModel currentRoute, Cmd.none )
 
 
 
@@ -33,14 +55,14 @@ init =
 
 
 type Msg
-    = NoOp
+    = OnLocationChange Location
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        NoOp ->
-            ( model, Cmd.none )
+        OnLocationChange location ->
+            ( { model | route = parseLocation location }, Cmd.none )
 
 
 
@@ -56,8 +78,26 @@ subscriptions model =
 -- VIEW
 
 
+view : Model -> Html Msg
 view model =
     div []
-        [ Views.Header.view
+        [ Views.Header.Header.view
         , Views.SearchBar.view
+        , viewPage model
         ]
+
+
+viewPage : Model -> Html Msg
+viewPage model =
+    case model.route of
+        Routing.Home ->
+            Pages.Home.view
+
+        Routing.Discover ->
+            Pages.Discover.view
+
+        Routing.Cast ->
+            Pages.Cast.view
+
+        Routing.NotFound ->
+            Pages.NotFound.view

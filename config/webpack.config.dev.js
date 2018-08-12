@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const paths = require('../config/paths');
 
 module.exports = {
-  entry: ['webpack-dev-server/client?http://localhost:3000', paths.appIndexJs],
+  entry: ['webpack-dev-server/client?http://localhost:8080', paths.appIndexJs],
   mode: 'development',
   devtool: 'cheap-module-source-map',
   output: {
