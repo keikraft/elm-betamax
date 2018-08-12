@@ -1,7 +1,5 @@
 module Main exposing (main)
 
-import Debug
-import Html
 import Html.Styled exposing (..)
 import Navigation exposing (Location)
 import Pages.Cast
@@ -9,6 +7,8 @@ import Pages.Discover
 import Pages.Home
 import Pages.NotFound
 import Routing exposing (Route, parseLocation)
+import Views.Header.Header
+import Views.SearchBar
 
 
 main : Program Never Model Msg
@@ -80,7 +80,11 @@ subscriptions model =
 
 view : Model -> Html Msg
 view model =
-    viewPage model
+    div []
+        [ Views.Header.Header.view
+        , Views.SearchBar.view
+        , viewPage model
+        ]
 
 
 viewPage : Model -> Html Msg

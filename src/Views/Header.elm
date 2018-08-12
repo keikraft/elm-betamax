@@ -1,37 +1,49 @@
 module Views.Header exposing (view)
 
-import Color
-import Element exposing (..)
-import Element.Attributes exposing (..)
-import Html exposing (Html, nav)
-import Style exposing (..)
-import Style.Color as Color
-import Style.Font as Font
+import Css exposing (..)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
+import Views.BetamaxLogo
 
 
-type Styles
-    = HeaderRow
-    | HeaderTitle
-
-
-stylesheet : StyleSheet Styles variation
-stylesheet =
-    Style.styleSheet
-        [ style HeaderRow
-            [ Color.background Color.grey
-            ]
-        , style HeaderTitle
-            [ Color.text Color.white
-            , Font.size 16
-            ]
+headerDiv : List (Attribute msg) -> List (Html msg) -> Html msg
+headerDiv =
+    styled div
+        [ displayFlex
+        , justifyContent spaceBetween
+        , alignItems center
+        , padding2 zero (px 10)
+        , backgroundColor (hex "000000")
         ]
+
+
+headerTitle : Html msg
+headerTitle =
+    styled span
+        [ fontSize (px 16)
+        , fontWeight (int 600)
+        , color (hex "ffffff")
+        ]
+        []
+        [ text "BETAMAX" ]
+
+
+headerGithubLink : Html msg
+headerGithubLink =
+    styled a
+        [ textDecoration none
+        , color (hex "ffffff")
+        ]
+        [ href "https://github.com/k3ira/elm-betamax"
+        , Html.Styled.Attributes.target "_blank"
+        ]
+        [ text "Github" ]
 
 
 view : Html msg
 view =
-    layout stylesheet <|
-        row HeaderRow
-            [ padding 10, spread ]
-            [ el HeaderTitle [] (text "ELM - Radio")
-            , el HeaderTitle [] (text "ELM - Radio")
-            ]
+    headerDiv []
+        [ Views.BetamaxLogo.view
+        , headerTitle
+        , headerGithubLink
+        ]
